@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, forkJoin } from 'rxjs';
+import { BehaviorSubject, forkJoin, of, zip } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -27,7 +28,24 @@ export class AppComponent implements OnInit {
     //call complete()
     subjectA.complete();
     subjectB.complete();
-    /*******************************/
     //forkJoin
+    /*******************************/
+
+
+    /*******************************/
+    //zip example
+    let age$ = of(25,30,40);
+    let name$ = of("Wellington","Cissa","Davi");
+    let isDev$ = of(true,false,false);
+
+    zip(age$,name$,isDev$).pipe(
+      map(([age,name,isDev]) => ({ idade:age,nome:name,programador:isDev })),
+    ).subscribe(element =>{
+      console.log(element);
+    })
+
+    //zip
+    /*******************************/
+
   }
 }
